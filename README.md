@@ -134,7 +134,7 @@ Lambda가 cloudfront의 origin으로 설정됩니다.
 
 ![image](https://user-images.githubusercontent.com/52392004/171371889-231fd84a-07ba-4ba5-9fb5-b51a1cc58909.png)
 
-cloudfront의 도메인으로 api('/status')를 호출시 lambada가 실행되어 아래와 같은 결과를 얻습니다. 
+cloudfront의 도메인으로 api('/status')를 호출시 lambada가 실행되어 아래와 같은 결과를 얻습니다. 이것은 api gateway endpoint를 이용할때와 동일한 결과 입니다. 
 
 <img width="772" alt="image" src="https://user-images.githubusercontent.com/52392004/171375890-3e81795d-1450-4fe1-a4cb-3227d603e835.png">
 
