@@ -26,7 +26,7 @@
 
 ## Role define
 
-아래는 Lambda에 S3와 log permission을 주기 위해 만들어본 Role 입니다. 
+아래는 S3와 log permission을 주기 위해 만든 Role 입니다. 
 
 ```java
     // lambda role 
@@ -71,8 +71,10 @@
     });
 ```    
    
-   하지만, 아래처럼 간단히도 표현 할 수 있습니다.
+   Lambda에서는 아래처럼 간단히도 표현 할 수 있습니다.
    
    ```java
    s3Bucket.grantReadWrite(lambdaBasic);
    ```
+   
+   여기서 사용한 Lambda는 dummy여서 permission이 필요하지 않습니다. 상기는 Role 관련 sample 입니다.
