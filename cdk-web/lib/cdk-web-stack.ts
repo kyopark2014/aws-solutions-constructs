@@ -15,9 +15,9 @@ export class CdkWebStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // S3
-    const s3Bucket = new s3.Bucket(this, "cloudfront-apigateway",{
-      bucketName: "storage-cloudfront-apigateway",
+    // create S3
+    const s3Bucket = new s3.Bucket(this, "s3-bucket-for-web-application",{
+      bucketName: "storage-web-application",
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
@@ -37,7 +37,13 @@ export class CdkWebStack extends Stack {
       description: 'The path of s3',
     });
 
-    // Lambda Role 
+    // copy web application files into s3 bucket
+    new s3Deploy.BucketDeployment(this, "DeployWebApplication", {
+      sources: [s3Deploy.Source.asset("../webapplication")],
+      destinationBucket: s3Bucket,
+    });
+
+    // lambda role 
     const lambdaRole = new iam.Role(this, "lambdaRole", {
       roleName: 'lambdaRole',
       assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
@@ -78,7 +84,7 @@ export class CdkWebStack extends Stack {
       description: 'The arn of lambdaRole',
     });
 
-    // basic lambda function
+    // lambda function
     const lambdaBasic = new lambda.Function(this, "lambdaBasic", {
       description: 'Basic Lambda Function',
       runtime: lambda.Runtime.NODEJS_14_X, 
@@ -93,41 +99,52 @@ export class CdkWebStack extends Stack {
       value: lambdaBasic.functionArn,
       description: 'The arn of basic lambda',
     });
-
-    // deploy web application into s3 bucket
-    new s3Deploy.BucketDeployment(this, "DeployWebApplication", {
-      sources: [s3Deploy.Source.asset("../webcliet")],
-      destinationBucket: s3Bucket,
-    });
-
-    // cloudfront
-    const distribution = new cloudFront.Distribution(this, 'cloudfront-apigateway', {
-      defaultBehavior: {
-        origin: new origins.S3Origin(s3Bucket),
-        allowedMethods: cloudFront.AllowedMethods.ALLOW_ALL,        
-        viewerProtocolPolicy: cloudFront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,        
-      },
-      priceClass: cloudFront.PriceClass.PRICE_CLASS_200,  
-      enableLogging: true,
-    //  description: 'cdk cloudFront',
-    });
-    new cdk.CfnOutput(this, 'distributionDomainName', {
-      value: distribution.domainName,
-      description: 'The domain name of the Distribution',
-    });
-
-    const apigw = new apiGateway.LambdaRestApi(this, 'LambdaRestApi', {
-      handler: lambdaBasic,
-      endpointConfiguration: {
-        types: [apiGateway.EndpointType.REGIONAL]
+  
+    // define api gateway
+    const mathodName = "status"
+    const apigw = new apiGateway.RestApi(this, 'api-gateway', {
+      description: 'API Gateway',
+      endpointTypes: [apiGateway.EndpointType.REGIONAL],
+      deployOptions: {
+        stageName: 'dev',
       },
       defaultMethodOptions: {
         authorizationType: apiGateway.AuthorizationType.NONE
-      }
-    });
-    new CloudFrontToApiGateway(this, 'cloudfront-apigateway', {
-      existingApiGatewayObj: apigw
+      },
+    });   
+
+    // define method of "status"
+    const api = apigw.root.addResource(mathodName);
+    api.addMethod('GET', new apiGateway.LambdaIntegration(lambdaBasic, {
+      integrationResponses: [{
+        statusCode: '200',
+      }], 
+      proxy:false, 
+    }), {
+      methodResponses: [   // API Gateway sends to the client that called a method.
+        {
+          statusCode: '200',
+          responseModels: {
+            'application/json': apiGateway.Model.EMPTY_MODEL,
+          }, 
+        }
+      ]
     }); 
+
+    // cloudfront + api gateway
+    let cloudfront = new CloudFrontToApiGateway(this, 'Destribution', {
+      existingApiGatewayObj: apigw,
+      
+    /*  cloudFrontDistributionProps: {    // not working
+        origin: new origins.S3Origin(s3Bucket),
+        behaviors: [{ isDefaultBehavior: true }] */
+    }); 
+
+    // the API URL based on cloudfront
+    new cdk.CfnOutput(this, 'cloudfrontApiURL', {
+      value: `https://${cloudfront.cloudFrontWebDistribution.distributionDomainName}/${mathodName}`, 
+      description: 'The url of cloudfront',
+    });
   }
 }
 
