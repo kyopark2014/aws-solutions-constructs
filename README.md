@@ -1,7 +1,11 @@
 # cdk-webclient
 
+- API Gateway 사용
 
-[AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)
+- CORS를 우회
+
+- [AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)를 이용
+
 
 
 AWS Solutions Constructs (Constructs) is an open-source extension of the AWS Cloud Development Kit (CDK) that provides multi-service, well-architected patterns for quickly defining solutions in code to create predictable and repeatable infrastructure. The goal is to accelerate the experience for developers to build solutions of any size using pattern-based definitions for their architecture.
