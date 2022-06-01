@@ -34,6 +34,12 @@ $ cdk bootstrap aws://123456789012/ap-northeast-2
 $ npm install -g aws-cdk-lib
 ```
 
+CloudFrontToApiGateway를 위한 aws-solutions-constructs의 aws-cloudfront-apigateway package 설치 
+
+```c
+$ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
+```
+
 ## Troubleshoot
 
 ```c
