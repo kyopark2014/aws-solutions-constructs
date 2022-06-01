@@ -1,5 +1,9 @@
 # cdk-webclient
 
+
+[AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)에서 제공하는 
+[aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)을 적용하여 결과 및 코드를 공유하고자 합니다. 
+
 - API Gateway 사용
 
 - CORS를 우회
@@ -48,4 +52,10 @@ npm ERR!     /Users/ksdyb/.npm/_logs/2022-06-01T01_40_16_351Z-debug-0.log
 
 이 경우에 버전을 2.23.0으로 변경후에 설치 가능합니다. 
 
+## Reference
+[AWS Solutions Library](https://aws.amazon.com/solutions/)
+
+[AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)
+
+[aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)
 
