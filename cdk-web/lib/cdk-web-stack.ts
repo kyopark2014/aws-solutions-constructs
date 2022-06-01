@@ -135,17 +135,16 @@ export class CdkWebStack extends Stack {
     let cloudfront = new CloudFrontToApiGateway(this, 'Destribution', {
       existingApiGatewayObj: apigw,
       
-    /*  cloudFrontDistributionProps: {    // not working
+      cloudFrontDistributionProps: {    // not working
         origin: new origins.S3Origin(s3Bucket),
-        behaviors: [{ isDefaultBehavior: true }] */
+        behaviors: [{ isDefaultBehavior: true }] 
+      } 
     }); 
 
     // the API URL based on cloudfront
     new cdk.CfnOutput(this, 'cloudfrontApiURL', {
       value: `https://${cloudfront.cloudFrontWebDistribution.distributionDomainName}/${mathodName}`, 
       description: 'The url of cloudfront',
-    });
+    }); 
   }
 }
-
-
