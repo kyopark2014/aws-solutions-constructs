@@ -43,7 +43,7 @@ $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
 
 ## Basic Lambda Function
 
-여기서는 CloudFront - Api gateway 조합을 설명하기 위함이므로 Lambda는 별도 기능이 없이 기본 생성된 코드를 그대로 사용합니다. 
+여기서는 CloudFront - Api gateway 조합을 설명하기 위함이므로 Lambda는 기본 생성된 코드를 그대로 사용합니다. 아래 Lambda 호출시에 "Hello from Lambda"를 200OK의 body에 포함하여 전송합니다. 
 
 ```java
 exports.handler = async (event) => {
