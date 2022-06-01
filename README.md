@@ -3,7 +3,7 @@
 [AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)에서 제공하는 
 [aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)을 적용하여 cloudfront와 api gateway연결을 생성합니다. AWS Solutions Constructs는 well-architectured pattern으로 design하는것을 돕고 multi-services를 지원하기 위해 만들어진 [CDK](https://github.com/kyopark2014/technical-summary/blob/main/cdk-introduction.md)의 open source extension입니다. 
 
-원래 목적은 '/'로는 web page를 열고, '/status'로는 api를 호출 할 수 있도록 해서, web page에 있는 index.html의 request.js가 cloudfront의 같은 domain으로 설정해서 cors 우회에 활용하려고 했으나, 실제로는 origin이 lambda로 설정되면서, s3로는 접근이 안되어서, 이런 용도로는 활용할 수 없었습니다.
+원래 목적은 '/'로는 web page를 열고, '/status'로는 api를 호출 할 수 있도록 해서, web page에 있는 index.html의 request.js가 cloudfront의 같은 domain으로 설정해서 cors 우회에 활용하려고 했으나, 실제로는 origin이 lambda로 설정되면서, s3로는 접근이 안되어서, 이런 용도로는 활용할 수 없었습니다. [aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)의 architecture 그림에 있는 S3는 multple routing을 고려한 구조가 아니라, 단순히 api-gateway의 logging을 위한 것입니다. 
 
 AWS Solution Constructs를 활용해 본다는 의미가 있지만, 기존에 있는 api를 조합해서 충분히 대체 가능하므로 AWS Solution Constructs의 용도는 제한적인 것으로 보입니다.
  
