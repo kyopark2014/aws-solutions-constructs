@@ -17,6 +17,18 @@ AWS Solutions Constructs (Constructs) is an open-source extension of the AWS Clo
 
 Use the AWS Solutions Constructs to define your solutions in a familiar programming language. The AWS Solutions Constructs supports TypeScript, JavaScript, Python, and Java at this time.
 
+### CDK Initiate
+
+Typescript로 cdk를 설정시 아래와 같이 합니다.
+
+```c
+$ cdk init app --language typescript
+
+$ cdk bootstrap aws://123456789012/ap-northeast-2
+```
+여기서 '123456789012'은 Account Number를 의미합니다.
+
+
 ## Troubleshoot
 
 ```c
