@@ -1,14 +1,25 @@
-# Welcome to your CDK TypeScript project
+# Bucket으로 파일 복사
 
-This is a blank project for CDK development with TypeScript.
+- 아래와 같이 S3 bucket을 생성합니다. 
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+```java
+    // create S3
+    const s3Bucket = new s3.Bucket(this, "s3-bucket-for-web-application",{
+      bucketName: "storage-web-application",
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      publicReadAccess: false,
+      versioned: false,
+    });
+```
 
-## Useful commands
+- s3 bucket으로 파일을 복사합니다. 
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+```java
+    // copy web application files into s3 bucket
+    new s3Deploy.BucketDeployment(this, "DeployWebApplication", {
+      sources: [s3Deploy.Source.asset("../webapplication")],
+      destinationBucket: s3Bucket,
+    });
+```    
