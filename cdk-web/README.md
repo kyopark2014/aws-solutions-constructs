@@ -23,3 +23,56 @@
       destinationBucket: s3Bucket,
     });
 ```    
+
+## Role define
+
+아래는 Lambda에 S3와 log permission을 주기 위해 만들어본 Role 입니다. 
+
+```java
+    // lambda role 
+    const lambdaRole = new iam.Role(this, "lambdaRole", {
+      roleName: 'lambdaRole',
+      assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
+      description: "Lambda Role",
+    });
+    lambdaRole.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        "s3:GetBucketLocation",
+        "s3:GetObject",
+        "s3:GetBucketLocation",
+        "s3:ListBucket",
+        "s3:ListBucketMultipartUploads",
+        "s3:ListMultipartUploadParts",
+        "s3:AbortMultipartUpload",
+        "s3:CreateBucket",
+        "s3:PutObject",
+        "s3:PutBucketPublicAccessBlock"
+      ],
+      resources: [
+        s3Bucket.bucketArn,
+        s3Bucket.bucketArn + "/*"
+      ],
+    }));
+    lambdaRole.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      resources: [
+        `arn:aws:logs:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:*`
+      ],
+    }));
+    new cdk.CfnOutput(this, 'lambdaRoleArn', {
+      value: lambdaRole.roleArn,
+      description: 'The arn of lambdaRole',
+    });
+```    
+   
+   하지만, 아래처럼 간단히도 표현 할 수 있습니다.
+   
+   ```java
+   s3Bucket.grantReadWrite(lambdaBasic);
+   ```
