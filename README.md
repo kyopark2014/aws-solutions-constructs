@@ -139,6 +139,19 @@ cloudfront의 도메인으로 api('/status')를 호출시 lambada가 실행되�
 <img width="772" alt="image" src="https://user-images.githubusercontent.com/52392004/171375890-3e81795d-1450-4fe1-a4cb-3227d603e835.png">
 
 
+
+
+## CloudFront Origins for the CDK CloudFront Library
+
+[CloudFront Origins for the CDK CloudFront Library](https://www.npmjs.com/package/@aws-cdk/aws-cloudfront-origins)의 [From an API Gateway REST API]와 같이 cloudfront로 들어오는 모든 traffic을 api gateway로 보내는 방법도 있습니다. 
+
+```java
+declare const api: apigateway.RestApi;
+new cloudfront.Distribution(this, 'Distribution', {
+  defaultBehavior: { origin: new origins.RestApiOrigin(api) },
+});
+```
+
 ## Troubleshoot
 
 ```c
