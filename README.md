@@ -79,6 +79,12 @@ exports.handler = async (event) => {
 };
 ```
 
+## cloudfront 설정결과
+
+Lambda가 origin으로 설정됩니다.
+
+![image](https://user-images.githubusercontent.com/52392004/171371889-231fd84a-07ba-4ba5-9fb5-b51a1cc58909.png)
+
 
 ## Troubleshoot
 
