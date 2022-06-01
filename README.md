@@ -40,6 +40,23 @@ CloudFrontToApiGateway를 위한 aws-solutions-constructs의 aws-cloudfront-apig
 $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
 ```
 
+
+## Basic Lambda Function
+
+여기서는 CloudFront - Api gateway 조합을 설명하기 위함이므로 Lambda는 별도 기능이 없이 기본 생성된 코드를 그대로 사용합니다. 
+
+```java
+exports.handler = async (event) => {
+    // TODO implement
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    return response;
+};
+```
+
+
 ## Troubleshoot
 
 ```c
