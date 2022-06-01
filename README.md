@@ -12,15 +12,15 @@ AWS Solution Constructs를 활용해 본다는 의미가 있지만, 기존에 �
 
 <img width="665" alt="image" src="https://user-images.githubusercontent.com/52392004/171373434-e860df2a-9105-4ae5-9f41-35e2917a8b2d.png">
 
-구현하려고 API Gateway 사용
-- 했던 API Gateway 사용
-- API Gateway 사용
+구현하려고 architecture는 아래와 같습니다. 
 <img width="640" alt="image" src="https://user-images.githubusercontent.com/52392004/171332403-159b38ca-02c4-4f94-95b5-db8b1b2293a7.png">
 
 
-AWS Solutions Constructs (Constructs) is an open-source extension of the AWS Cloud Development Kit (CDK) that provides multi-service, well-architected patterns for quickly defining solutions in code to create predictable and repeatable infrastructure. The goal is to accelerate the experience for developers to build solutions of any size using pattern-based definitions for their architecture.
+## AWS Solutions Constructs
 
-Use the AWS Solutions Constructs to define your solutions in a familiar programming language. The AWS Solutions Constructs supports TypeScript, JavaScript, Python, and Java at this time.
+AWS Solutions Constructs (Constructs) is an **open-source extension** of the AWS Cloud Development Kit (CDK) that provides multi-service, well-architected patterns for quickly defining solutions in code to create predictable and repeatable infrastructure. The goal is to accelerate the experience for developers to build solutions of any size using pattern-based definitions for their architecture.
+
+
 
 ### CDK Initiate
 
@@ -33,19 +33,21 @@ $ cdk bootstrap aws://123456789012/ap-northeast-2
 ```
 여기서 '123456789012'은 Account Number를 의미합니다.
 
--- Upgrade
+- aws-cdk-lib의 수동 Upgrade가 필요합니다.
 
 ```c
 $ npm install -g aws-cdk-lib
 ```
 
-CloudFrontToApiGateway를 위한 aws-solutions-constructs의 aws-cloudfront-apigateway package 설치 
+- CloudFrontToApiGateway를 위한 aws-solutions-constructs의 aws-cloudfront-apigateway package 설치하여야 합니다.
 
 ```c
 $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
 ```
 
-## CDK 설정
+## aws-cloudfront-apigateway
+
+[aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)에서는 아래와 같이 LambdaRestApi을 이용해 api gateway를 생성합니다. proxy를 true로 하면, 모든 request들이 lambda function으로 갑니다. proxy를 false로 하면, addResource와 addMethod를 이용해 정의할 수 있습니다. 기본은 true 입니다.
 
 ```java
     // api gateway
@@ -57,21 +59,62 @@ $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
       defaultMethodOptions: {
         authorizationType: apiGateway.AuthorizationType.NONE
       },
-      proxy: false
+      proxy: true
     });
 ```
 
-### proxy 설정 
+## 구현한 Api Gateway
 
-proxy를 true로 하면, 모든 request들이 lambda function으로 갑니다. proxy를 false로 하면, addResource와 addMethod를 이용해 정의할 수 있습니다. 기본은 true 입니다.
+여기서는 RestAPI를 활용합니다. CloudFrontToApiGateway를 이용하여 cloudfront와 api gateway를 동시에 설정 가능합니다.
 
-### addMethod
 
+```java
+    // define api gateway
+    const mathodName = "status"
+    const apigw = new apiGateway.RestApi(this, 'api-gateway', {
+      description: 'API Gateway',
+      endpointTypes: [apiGateway.EndpointType.REGIONAL],
+      deployOptions: {
+        stageName: 'dev',
+      },
+      defaultMethodOptions: {
+        authorizationType: apiGateway.AuthorizationType.NONE
+      },
+    });   
+
+    // define method of "status"
+    const api = apigw.root.addResource(mathodName);
+    api.addMethod('GET', new apiGateway.LambdaIntegration(lambdaBasic, {
+      integrationResponses: [{
+        statusCode: '200',
+      }], 
+      proxy:false, 
+    }), {
+      methodResponses: [   // API Gateway sends to the client that called a method.
+        {
+          statusCode: '200',
+          responseModels: {
+            'application/json': apiGateway.Model.EMPTY_MODEL,
+          }, 
+        }
+      ]
+    }); 
+
+    // cloudfront + api gateway
+    let cloudfront = new CloudFrontToApiGateway(this, 'Destribution', {
+      existingApiGatewayObj: apigw,
+      
+      cloudFrontDistributionProps: {
+        origin: new origins.S3Origin(s3Bucket),
+        behaviors: [{ isDefaultBehavior: true }]
+      }
+    }); 
+```
 
 
 ## Basic Lambda Function
 
-여기서는 CloudFront - Api gateway 조합을 설명하기 위함이므로 Lambda는 기본 생성된 코드를 그대로 사용합니다. 아래 Lambda 호출시에 "Hello from Lambda"를 200OK의 body에 포함하여 전송합니다. 
+여기서는 CloudFront - Api gateway 조합을 설명하기 위함이므로 Lambda는 기본 생성된 코드를 사용합니다. 아래 Lambda 호출시에 "Hello from Lambda"를 200OK의 body에 포함하여 전송합니다. 
 
 ```java
 exports.handler = async (event) => {
@@ -84,11 +127,15 @@ exports.handler = async (event) => {
 };
 ```
 
-## cloudfront 설정결과
+## 결과
 
-Lambda가 origin으로 설정됩니다.
+Lambda가 cloudfront의 origin으로 설정됩니다.
 
 ![image](https://user-images.githubusercontent.com/52392004/171371889-231fd84a-07ba-4ba5-9fb5-b51a1cc58909.png)
+
+cloudfront의 도메인으로 api('/status')를 호출시 lambada가 실행되어 아래와 같은 결과르 얻습니다. 
+
+<img width="772" alt="image" src="https://user-images.githubusercontent.com/52392004/171375890-3e81795d-1450-4fe1-a4cb-3227d603e835.png">
 
 
 ## Troubleshoot
