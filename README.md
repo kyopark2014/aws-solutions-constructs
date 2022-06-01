@@ -40,6 +40,29 @@ CloudFrontToApiGateway를 위한 aws-solutions-constructs의 aws-cloudfront-apig
 $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
 ```
 
+## CDK 설정
+
+```java
+    // api gateway
+    const apigw = new apiGateway.LambdaRestApi(this, 'api-gateway', {
+      handler: lambdaBasic,
+      endpointConfiguration: {
+        types: [apiGateway.EndpointType.REGIONAL]
+      },
+      defaultMethodOptions: {
+        authorizationType: apiGateway.AuthorizationType.NONE
+      },
+      proxy: false
+    });
+```
+
+### proxy 설정 
+
+proxy를 true로 하면, 모든 request들이 lambda function으로 갑니다. proxy를 false로 하면, addResource와 addMethod를 이용해 정의할 수 있습니다. 기본은 true 입니다.
+
+### addMethod
+
+
 
 ## Basic Lambda Function
 
