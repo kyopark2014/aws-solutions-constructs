@@ -1,4 +1,4 @@
-# [AWS Solution Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)을 이용한 CloudFront - Api Gateway 구현
+# AWS Solution Constructs을 이용한 CloudFront - Api Gateway 구현
 
 [AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)에서 제공하는 
 [aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)을 적용하여 cloudfront-api gateway연결을 생성합니다. 
