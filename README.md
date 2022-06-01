@@ -46,7 +46,7 @@ $ npm install -g aws-cdk-lib
 $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
 ```
 
-## aws-cloudfront-apigateway
+## LambdaRestApi로 구현시
 
 [aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)에서는 아래와 같이 LambdaRestApi을 이용해 api gateway를 생성합니다. proxy를 true로 하면, 모든 request들이 lambda function으로 갑니다. proxy를 false로 하면, addResource와 addMethod를 이용해 정의할 수 있습니다. 기본은 true 입니다.
 
