@@ -24,7 +24,7 @@
     });
 ```    
 
-## Role define
+## Role definition
 
 아래는 S3와 log permission을 주기 위해 만든 Role 입니다. 
 
