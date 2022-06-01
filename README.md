@@ -1,4 +1,4 @@
-# AWS Solution Constructs을 이용한 CloudFront - Api Gateway 구현
+# AWS Solution Constructs을 이용한 CloudFront / Api Gateway 구현
 
 [AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)에서 제공하는 
 [aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)을 적용하여 cloudfront와 api gateway연결을 생성합니다. AWS Solutions Constructs는 well-architectured pattern으로 design하는것을 돕고 multi-services를 지원하기 위해 만들어진 [CDK](https://github.com/kyopark2014/technical-summary/blob/main/cdk-introduction.md)의 open source extension입니다. 
