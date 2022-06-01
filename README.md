@@ -13,6 +13,7 @@ AWS Solution Constructs를 활용해 본다는 의미가 있지만, 기존에 �
 <img width="665" alt="image" src="https://user-images.githubusercontent.com/52392004/171373434-e860df2a-9105-4ae5-9f41-35e2917a8b2d.png">
 
 구현하려고 했던 architecture는 아래와 같습니다. 
+
 <img width="640" alt="image" src="https://user-images.githubusercontent.com/52392004/171332403-159b38ca-02c4-4f94-95b5-db8b1b2293a7.png">
 
 
