@@ -192,7 +192,7 @@ Upgrade를 아래처럼 수행합니다.
 $ npm install -g aws-cdk-lib
 ```
 
-이후 버전을 확인해보면 "2.25.0"이상으로 업그레이드 됩니다.
+이후 버전을 확인해보면 "2.23.0"이상으로 업그레이드 됩니다.
 
 ## Reference
 [AWS Solutions Library](https://aws.amazon.com/solutions/)
