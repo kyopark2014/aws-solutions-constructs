@@ -104,9 +104,9 @@ $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
     let cloudfront = new CloudFrontToApiGateway(this, 'Destribution', {
       existingApiGatewayObj: apigw,
       
-      cloudFrontDistributionProps: {
+    /*  cloudFrontDistributionProps: {    // not working
         origin: new origins.S3Origin(s3Bucket),
-        behaviors: [{ isDefaultBehavior: true }]
+        behaviors: [{ isDefaultBehavior: true }] */
       }
     }); 
 ```
