@@ -39,12 +39,13 @@ npm ERR! A complete log of this run can be found in:
 npm ERR!     /Users/ksdyb/.npm/_logs/2022-06-01T01_40_16_351Z-debug-0.log
 ```
  
-- 현재 내 버전 
+- 현재 버전은 package.json에서 확인합니다. 
 
 ```java
- package.json
   "dependencies": {
     "aws-cdk-lib": "2.17.0",
 ```
 
-버전을 2.23.0으로 변경후에 설치 가능함    
+이 경우에 버전을 2.23.0으로 변경후에 설치 가능합니다. 
+
+
