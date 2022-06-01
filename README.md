@@ -1,15 +1,20 @@
-# cdk-webclient
-
+# [AWS Solution Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)을 이용한 CloudFront - Api Gateway 구현
 
 [AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)에서 제공하는 
-[aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)을 적용하여 결과 및 코드를 공유하고자 합니다. 
+[aws-cloudfront-apigateway](https://docs.aws.amazon.com/solutions/latest/constructs/aws-cloudfront-apigateway.html)을 적용하여 cloudfront-api gateway연결을 생성합니다. 
 
+원래 목적은 '/'로는 web page를 열고, '/status'로는 api를 호출 할 수 있도록 해서, web page에 있는 index.html의 request.js가 cloudfront의 같은 domain으로 설정해서 cors 우회에 활용하려고 했으나, 실제로는 origin이 lambda로 설정되면서, s3 접근이 안되는 현상이 있어서, 이런 용도로는 활용할 수 없습니다.
+
+AWS Solution Constructs를 활용해 본다는 의미가 있지만, 기존에 있는 api를 조합해서 충분히 대체 가능하므로 AWS Solution Constructs의 용도는 제한적이어 보입니다. 
+
+
+구현된 architecture는 아래와 같습니다.
+
+<img width="665" alt="image" src="https://user-images.githubusercontent.com/52392004/171373434-e860df2a-9105-4ae5-9f41-35e2917a8b2d.png">
+
+구현하려고 API Gateway 사용
+- 했던 API Gateway 사용
 - API Gateway 사용
-
-- CORS를 우회
-
-- [AWS Solutions Constructs](https://docs.aws.amazon.com/solutions/latest/constructs/welcome.html)를 이용
-
 <img width="640" alt="image" src="https://user-images.githubusercontent.com/52392004/171332403-159b38ca-02c4-4f94-95b5-db8b1b2293a7.png">
 
 
