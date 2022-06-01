@@ -28,6 +28,17 @@ $ cdk bootstrap aws://123456789012/ap-northeast-2
 ```
 여기서 '123456789012'은 Account Number를 의미합니다.
 
+-- Upgrade
+
+```c
+$ npm install -g aws-cdk-lib
+```
+
+CloudFrontToApiGateway를 위한 aws-solutions-constructs의 aws-cloudfront-apigateway package 설치 
+
+```c
+$ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
+```
 
 ## Troubleshoot
 
@@ -63,7 +74,13 @@ npm ERR!     /Users/ksdyb/.npm/_logs/2022-06-01T01_40_16_351Z-debug-0.log
     "aws-cdk-lib": "2.17.0",
 ```
 
-이 경우에 버전을 2.23.0으로 변경후에 설치 가능합니다. 
+Upgrade를 아래처럼 수행합니다.
+
+```c
+$ npm install -g aws-cdk-lib
+```
+
+이후 버전을 확인해보면 "2.25.0"이상으로 업그레이드 됩니다.
 
 ## Reference
 [AWS Solutions Library](https://aws.amazon.com/solutions/)
