@@ -64,7 +64,7 @@ $ npm install @aws-solutions-constructs/aws-cloudfront-apigateway
     });
 ```
 
-## 구현한 Api Gateway
+## RestApi로 구현시
 
 여기서는 RestAPI를 활용합니다. CloudFrontToApiGateway를 이용하여 cloudfront와 api gateway를 동시에 설정 가능합니다.
 
